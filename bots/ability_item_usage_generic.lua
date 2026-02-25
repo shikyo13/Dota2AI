@@ -21,8 +21,27 @@ local bDeafaultAbilityHero = BotBuild['bDeafaultAbility']
 local bDeafaultItemHero = BotBuild['bDeafaultItem']
 local sAbilityLevelUpList = BotBuild['sSkillList']
 
+local sAbilityQueue = nil  -- split lazily on first call
+local sTalentQueue = nil
+
 local RadiantFountain = Vector(-6619, -6336, 384)
 local DireFountain = Vector(6928, 6372, 392)
+
+-- Split the interleaved sSkillList into ability-only and talent-only queues.
+-- In 7.40, talents use dedicated talent points (not ability points),
+-- so they must be leveled independently.
+local function SplitSkillList()
+	sAbilityQueue = {}
+	sTalentQueue = {}
+	for _, name in ipairs(sAbilityLevelUpList) do
+		local hAbility = bot:GetAbilityByName(name)
+		if hAbility and hAbility:IsTalent() then
+			table.insert(sTalentQueue, name)
+		elseif name ~= nil then
+			table.insert(sAbilityQueue, name)
+		end
+	end
+end
 
 local function AbilityLevelUpComplement()
 	if GetGameState() ~= GAME_STATE_PRE_GAME
@@ -64,16 +83,23 @@ local function AbilityLevelUpComplement()
 
 	if bot.needRefreshAbilitiesFor737 ~= nil then
 		sAbilityLevelUpList = BotBuild['sSkillList']
+		SplitSkillList()
 		if not bot.needRefreshAbilitiesFor737 then bot.needRefreshAbilitiesFor737 = nil end
 	end
 
+	-- Lazy init: split the interleaved skill list on first call
+	if sAbilityQueue == nil then SplitSkillList() end
+
 	local botLevel = bot:GetLevel()
 
-	if #sAbilityLevelUpList >= 1
+	----------------------------------------------------------------------
+	-- PHASE 1: Level abilities (gated on ability points)
+	----------------------------------------------------------------------
+	if #sAbilityQueue >= 1
 	and bot:GetAbilityPoints() > 0
 	then
 		if J.IsTryingtoUseAbility(bot) then return end
-		local abilityName = sAbilityLevelUpList[1]
+		local abilityName = sAbilityQueue[1]
 		local abilityToLevelup = bot:GetAbilityByName( abilityName )
 
 		if abilityName == 'npc_dota_hero_kez'
@@ -81,29 +107,29 @@ local function AbilityLevelUpComplement()
 			return
 		end
 
-		-- Kez abilities
+		-- Kez mode-swap abilities
 		if botName == 'npc_dota_hero_kez' then
 			if bot.kez_mode == 'sai' then
 				for i = 0, 6 do
 					local hAbility = bot:GetAbilityInSlot(i)
 					local sAbilityName = hAbility:GetName()
 					if hAbility ~= nil then
-						if sAbilityLevelUpList[1] == 'kez_echo_slash' and sAbilityName == 'kez_falcon_rush'
+						if sAbilityQueue[1] == 'kez_echo_slash' and sAbilityName == 'kez_falcon_rush'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_falcon_rush'
-						elseif sAbilityLevelUpList[1] == 'kez_grappling_claw' and sAbilityName == 'kez_talon_toss'
+							sAbilityQueue[1] = 'kez_falcon_rush'
+						elseif sAbilityQueue[1] == 'kez_grappling_claw' and sAbilityName == 'kez_talon_toss'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_talon_toss'
-						elseif sAbilityLevelUpList[1] == 'kez_kazurai_katana' and sAbilityName == 'kez_shodo_sai'
+							sAbilityQueue[1] = 'kez_talon_toss'
+						elseif sAbilityQueue[1] == 'kez_kazurai_katana' and sAbilityName == 'kez_shodo_sai'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_shodo_sai'
-						elseif sAbilityLevelUpList[1] == 'kez_raptor_dance' and sAbilityName == 'kez_ravens_veil'
+							sAbilityQueue[1] = 'kez_shodo_sai'
+						elseif sAbilityQueue[1] == 'kez_raptor_dance' and sAbilityName == 'kez_ravens_veil'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_ravens_veil'
+							sAbilityQueue[1] = 'kez_ravens_veil'
 						end
 					end
 				end
@@ -112,22 +138,22 @@ local function AbilityLevelUpComplement()
 					local hAbility = bot:GetAbilityInSlot(i)
 					local sAbilityName = hAbility:GetName()
 					if hAbility ~= nil then
-						if sAbilityLevelUpList[1] == 'kez_falcon_rush' and sAbilityName == 'kez_echo_slash'
+						if sAbilityQueue[1] == 'kez_falcon_rush' and sAbilityName == 'kez_echo_slash'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_echo_slash'
-						elseif sAbilityLevelUpList[1] == 'kez_talon_toss' and sAbilityName == 'kez_grappling_claw'
+							sAbilityQueue[1] = 'kez_echo_slash'
+						elseif sAbilityQueue[1] == 'kez_talon_toss' and sAbilityName == 'kez_grappling_claw'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_grappling_claw'
-						elseif sAbilityLevelUpList[1] == 'kez_shodo_sai' and sAbilityName == 'kez_kazurai_katana'
+							sAbilityQueue[1] = 'kez_grappling_claw'
+						elseif sAbilityQueue[1] == 'kez_shodo_sai' and sAbilityName == 'kez_kazurai_katana'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_kazurai_katana'
-						elseif sAbilityLevelUpList[1] == 'kez_ravens_veil' and sAbilityName == 'kez_raptor_dance'
+							sAbilityQueue[1] = 'kez_kazurai_katana'
+						elseif sAbilityQueue[1] == 'kez_ravens_veil' and sAbilityName == 'kez_raptor_dance'
 						then
 							abilityToLevelup = hAbility
-							sAbilityLevelUpList[1] = 'kez_raptor_dance'
+							sAbilityQueue[1] = 'kez_raptor_dance'
 						end
 					end
 				end
@@ -152,33 +178,68 @@ local function AbilityLevelUpComplement()
 			and abilityToLevelup:CanAbilityBeUpgraded()
 			and abilityToLevelup:GetLevel() < abilityToLevelup:GetMaxLevel()
 		then
-			-- print('Trying to upgrade '..abilityToLevelup:GetName())
 			bot:ActionImmediate_LevelAbility(abilityToLevelup:GetName())
-			table.remove( sAbilityLevelUpList, 1 )
+			table.remove( sAbilityQueue, 1 )
 		elseif abilityName == 'generic_hidden' then
-			local nextAbility = sAbilityLevelUpList[2]
+			local nextAbility = sAbilityQueue[2]
 			print("[WARN] Level up ability "..abilityName.." for "..botName.." does not make sense. try to upgrade the next ability: "..tostring(nextAbility))
-			table.remove( sAbilityLevelUpList, 1 )
+			table.remove( sAbilityQueue, 1 )
 			if nextAbility then
 				bot:ActionImmediate_LevelAbility(nextAbility)
 			end
 		elseif not abilityToLevelup:IsHidden() and botLevel >= abilityToLevelup:GetHeroLevelRequiredToUpgrade() then
-			-- still try it
 			print("[WARN] Level up ability "..abilityName.." for "..botName.." may fail because it was called on ability that's not available or can't get upgraded anymore.")
 			bot:ActionImmediate_LevelAbility(abilityName)
-			table.remove( sAbilityLevelUpList, 1 )
-			-- bot:ActionImmediate_LevelAbility('special_bonus_attributes')
+			table.remove( sAbilityQueue, 1 )
 		else
 			print("[WARN] Skipped to level up ability "..abilityName.." for "..botName.." for this time because it may fail.")
 			if botLevel > 25 then
 				print("[WARN] Ignore ability "..abilityName.." for "..botName.." because it may always fail.")
-				table.remove( sAbilityLevelUpList, 1 )
+				table.remove( sAbilityQueue, 1 )
 			end
 		end
 	end
 
-	if botLevel > 25 and botLevel < 30 and bot:GetAbilityPoints() >= 1 and #sAbilityLevelUpList <= 3 then
-		sAbilityLevelUpList = J.Utils.CombineTablesUnique(J.Skill.GetTalentList( bot ), J.Skill.GetAbilityList( bot ))
+	----------------------------------------------------------------------
+	-- PHASE 2: Level talents (7.40 talent point system)
+	-- NOTE: ActionImmediate_LevelAbility() may not work for talents in 7.40.
+	-- We try once per talent at the appropriate level; if CanAbilityBeUpgraded()
+	-- is false, we leave it in queue and recheck next tick (throttled to 1/sec).
+	----------------------------------------------------------------------
+	if #sTalentQueue >= 1 then
+		local talentName = sTalentQueue[1]
+		local talentToLevelup = bot:GetAbilityByName(talentName)
+
+		if talentToLevelup ~= nil
+			and not talentToLevelup:IsHidden()
+			and botLevel >= talentToLevelup:GetHeroLevelRequiredToUpgrade()
+			and talentToLevelup:CanAbilityBeUpgraded()
+			and talentToLevelup:GetLevel() < talentToLevelup:GetMaxLevel()
+		then
+			bot:ActionImmediate_LevelAbility(talentName)
+			table.remove(sTalentQueue, 1)
+		elseif talentToLevelup ~= nil
+			and talentToLevelup:IsTrained()
+		then
+			-- Already trained (maybe auto-leveled by engine), remove from queue
+			table.remove(sTalentQueue, 1)
+		end
+		-- If CanAbilityBeUpgraded() is false, do nothing -- don't remove, don't retry
+		-- The talent stays in queue and is checked next tick (throttled to 1/sec)
+	end
+
+	----------------------------------------------------------------------
+	-- PHASE 3: Cleanup -- remove trained talents from queue
+	----------------------------------------------------------------------
+	if botLevel > 25 and #sTalentQueue >= 1 then
+		local newQueue = {}
+		for _, name in ipairs(sTalentQueue) do
+			local hAbility = bot:GetAbilityByName(name)
+			if hAbility and not hAbility:IsTrained() then
+				table.insert(newQueue, name)
+			end
+		end
+		sTalentQueue = newQueue
 	end
 end
 
@@ -7756,6 +7817,9 @@ function X.SetAbilityItemList(heroAbility, items, abilityLvlup)
 	bDeafaultAbilityHero = heroAbility
 	bDeafaultItemHero = items
 	sAbilityLevelUpList = abilityLvlup
+	-- Invalidate split queues so they re-split on next tick
+	sAbilityQueue = nil
+	sTalentQueue = nil
 end
 
 X.AbilityLevelUpThink = AbilityLevelUpThink

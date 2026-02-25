@@ -41,6 +41,7 @@ npm run prettier     # Format all code
 ## Git Workflow
 - **`main`** -- Development branch
 - **`upstream`** remote -- Sync with OpenHyperAI: `git fetch upstream && git merge upstream/main`
+- **Always use version control** -- Commit working changes before starting new work. Never leave significant changes uncommitted across sessions.
 
 ## Testing Workflow
 1. Build: `npm run build:lua`
