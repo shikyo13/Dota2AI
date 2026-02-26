@@ -288,26 +288,21 @@ function Think()
             return
         end
 
-        if GetTeam() == TEAM_RADIANT
-		then
-			if bot:GetAssignedLane() == LANE_BOT
-			then
-				bot:Action_MoveToLocation(GetRuneSpawnLocation(RUNE_BOUNTY_2) + RandomVector(50))
-				return
+        if GetTeam() == TEAM_RADIANT then
+            if bot:GetAssignedLane() == LANE_BOT then
+                bot:Action_MoveToLocation(GetRuneSpawnLocation(RUNE_BOUNTY_2) + RandomVector(50))
             else
                 bot:Action_MoveToLocation(GetRuneSpawnLocation(RUNE_POWERUP_1) + RandomVector(50))
-				return
-			end
-		else
-			if bot:GetAssignedLane() == LANE_TOP
-			then
-				bot:Action_MoveToLocation(GetRuneSpawnLocation(RUNE_BOUNTY_1) + RandomVector(50))
-				return
+            end
+            return
+        else
+            if bot:GetAssignedLane() == LANE_TOP then
+                bot:Action_MoveToLocation(GetRuneSpawnLocation(RUNE_BOUNTY_1) + RandomVector(50))
             else
                 bot:Action_MoveToLocation(GetRuneSpawnLocation(RUNE_POWERUP_2) + RandomVector(50))
-				return
-			end
-		end
+            end
+            return
+        end
     end
 
     local botAttackRange = bot:GetAttackRange() + 150

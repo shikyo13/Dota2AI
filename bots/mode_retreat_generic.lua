@@ -29,7 +29,8 @@ end
 function GetDesireHelper()
     botActiveMode = bot:GetActiveMode()
 
-    if not bot:IsAlive()
+    if DotaTime() < 0
+    or not bot:IsAlive()
     or bot:HasModifier('modifier_dazzle_nothl_projection_soul_clone')
     or bot:HasModifier('modifier_skeleton_king_reincarnation_scepter_active')
     or bot:HasModifier('modifier_item_helm_of_the_undying_active')
