@@ -49,6 +49,9 @@ local runTime = 0;
 local shouldRunTime = 0
 local runMode = false;
 
+local fLastRetreatEndTime = -100
+local POST_RETREAT_SUPPRESS = 1.0
+
 
 if bot.farmLocation == nil then bot.farmLocation = bot:GetLocation() end
 
@@ -144,6 +147,13 @@ function GetDesireHelper()
     or (J.DoesTeamHaveAegis() and J.IsLateGame() and nAliveAllyCount >= 4)
     or not bAlive
     then
+        if botActiveMode == BOT_MODE_RETREAT and botActiveModeDesire > 0 then
+            fLastRetreatEndTime = DotaTime()
+        end
+        return BOT_MODE_DESIRE_NONE
+    end
+    -- Suppress farm briefly after retreat ends to prevent retreat-farm oscillation
+    if DotaTime() - fLastRetreatEndTime < POST_RETREAT_SUPPRESS then
         return BOT_MODE_DESIRE_NONE
     end
 	

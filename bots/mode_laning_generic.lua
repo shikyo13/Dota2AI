@@ -14,9 +14,24 @@ local botAssignedLane = nil
 local botAttackRange = bot:GetAttackRange()
 local attackDamage = bot:GetAttackDamage()
 
+local fLaningDesireCache = 0
+local fLaningCacheTime = -100
+local LANING_CACHE_TTL = 0.3
+local fLaningSuppressedUntil = 0
+
 if Utils.BuggyHeroesDueToValveTooLazy[botName] then local_mode_laning_generic = dofile( GetScriptDirectory().."/FunLib/override_generic/mode_laning_generic" ) end
 
 function GetDesire()
+	if DotaTime() - fLaningCacheTime < LANING_CACHE_TTL then
+		return fLaningDesireCache
+	end
+	local res = GetDesireHelper()
+	fLaningDesireCache = res
+	fLaningCacheTime = DotaTime()
+	return res
+end
+
+function GetDesireHelper()
 	if bot:IsInvulnerable() or not bot:IsHero() or not bot:IsAlive() or not string.find(botName, "hero") or bot:IsIllusion() then return BOT_MODE_DESIRE_NONE end
 	local botLV = bot:GetLevel()
 	local currentTime = DotaTime()
@@ -41,42 +56,28 @@ function GetDesire()
 	end
 
 	if GetGameMode() == 23 then currentTime = currentTime * 1.65 end
-	if currentTime < 0 then return BOT_ACTION_DESIRE_NONE end
-
-	-- if DotaTime() > 20 and DotaTime() - skipLaningState.lastCheckTime < skipLaningState.checkGap then
-	-- 	if skipLaningState.count > 6 then
-	-- 		print('[WARN] Bot ' ..botName.. ' switching modes too often, now stop it for laning to avoid conflicts.')
-	-- 		return 0
-	-- 	end
-	-- else
-	-- 	skipLaningState.lastCheckTime = DotaTime()
-	-- 	skipLaningState.count = 0
-	-- end
+	if currentTime < 0 then return BOT_MODE_DESIRE_NONE end
 
 	if J.GetEnemiesAroundAncient(bot, 3200) > 0 then
 		return BOT_MODE_DESIRE_NONE
 	end
 
-	-- if J.GetDistanceFromAncient( bot, true ) < 6900 then
-	-- 	return BOT_MODE_DESIRE_NONE
-	-- end
+	-- Hero-damage suppression lockout: once triggered, hold for 2.0s
+	if DotaTime() < fLaningSuppressedUntil then return BOT_MODE_DESIRE_NONE end
 
 	if bot:WasRecentlyDamagedByAnyHero(5)
 	and #J.Utils.GetLastSeenEnemyIdsNearLocation(bot:GetLocation(), 800) > 0 then
 		local nLaneFrontLocation = GetLaneFrontLocation(GetTeam(), bot:GetAssignedLane(), 0)
 		local nDistFromLane = GetUnitToLocationDistance(bot, nLaneFrontLocation)
 		if not J.WeAreStronger(bot, 1200) or (nDistFromLane > 700 and J.GetHP(bot) < 0.7) then
+			fLaningSuppressedUntil = DotaTime() + 2.0
 			return BOT_MODE_DESIRE_NONE
 		end
 	end
 
-	-- 如果在打高地 就别撤退去干别的
 	if J.Utils.IsTeamPushingSecondTierOrHighGround(bot) then
 		return BOT_MODE_DESIRE_NONE
 	end
-	-- if J.ShouldGoFarmDuringLaning(bot) then
-	-- 	return 0.2
-	-- end
 
 	if local_mode_laning_generic or (J.GetPosition(bot) == 1 and J.IsPosxHuman(5)) then
 		-- last hit

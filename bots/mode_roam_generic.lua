@@ -22,6 +22,17 @@ local BearAttackLimitDistance = 1100
 local TetherBreakDistance = 1000
 local ConsiderHeroSpecificRoaming = {}
 
+local fRoamMoveTime = 0
+local vRoamLastDest = nil
+
+local function RoamMove(dest)
+	if DotaTime() < fRoamMoveTime then return end
+	if vRoamLastDest ~= nil and (dest - vRoamLastDest):Length2D() < 100 then return end
+	bot:Action_MoveToLocation(dest)
+	fRoamMoveTime = DotaTime() + 0.2
+	vRoamLastDest = dest
+end
+
 local laneToGank = nil
 local lastGankDecisionTime = 0
 local gankDecisionHoldTime = 1.5 * 60 -- cant change dicision within this time
@@ -754,7 +765,7 @@ function ThinkGeneralRoaming()
 	and bot:GetActiveModeDesire() > BOT_MODE_DESIRE_VERYHIGH
 	and (botName == 'npc_dota_hero_lone_druid_bear' or bot:HasModifier('modifier_arc_warden_tempest_double') or J.IsMeepoClone(bot))
 	then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
@@ -763,7 +774,7 @@ function ThinkGeneralRoaming()
 		if J.IsValid(botTarget) then
 			if GetUnitToUnitDistance(bot, botTarget) > bot:GetAttackRange() + 200
 			then
-				bot:Action_MoveToLocation(botTarget:GetLocation())
+				RoamMove(botTarget:GetLocation())
 				return
 			else
 				bot:Action_AttackUnit(botTarget, false)
@@ -774,7 +785,7 @@ function ThinkGeneralRoaming()
 
 	if J.GetModifierTime(bot, "modifier_flask_healing") >= 1 then
 		if #bot:GetNearbyHeroes(1000, true, BOT_MODE_NONE) >= 1 and J.GetHP(bot) < 0.8 then
-			bot:Action_MoveToLocation(J.GetTeamFountain())
+			RoamMove(J.GetTeamFountain())
 			return
 		end
 	end
@@ -784,7 +795,7 @@ function ThinkGeneralRoaming()
 		if J.IsValid(botTarget) then
 			if GetUnitToUnitDistance(bot, botTarget) > bot:GetAttackRange() + 200
 			then
-				bot:Action_MoveToLocation(botTarget:GetLocation())
+				RoamMove(botTarget:GetLocation())
 				return
 			else
 				bot:Action_AttackUnit(botTarget, false)
@@ -810,62 +821,62 @@ function ThinkGeneralRoaming()
 
 	if botName == 'npc_dota_hero_lone_druid' then
 		if J.GetHP(bot) < 0.65 or J.GetMP(bot) < 0.35 then
-			bot:Action_MoveToLocation(J.GetTeamFountain()); return
+			RoamMove(J.GetTeamFountain()); return
 		end
 	end
 
 	if bot:HasModifier("modifier_ursa_fury_swipes_damage_increase") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_monkey_king_quadruple_tap_counter") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_slark_essence_shift_debuff_counter") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_silencer_glaives_of_wisdom_debuff_counter") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_dazzle_poison_touch") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_maledict") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_viper_poison_attack_slow") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if J.GetModifierCount(bot, "modifier_huskar_burning_spear_debuff") >= 3 then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if J.GetModifierCount(bot, "modifier_batrider_sticky_napalm") >= 3 then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if bot:HasModifier("modifier_undying_tombstone_zombie_deathstrike_slow") then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if J.GetModifierCount(bot, "modifier_bristleback_quill_spray") >= 3 then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
@@ -876,21 +887,21 @@ function ThinkGeneralRoaming()
 			local towerFromFountain = GetUnitToLocationDistance(allyTowers[1], J.GetTeamFountain())
 			local distanceToTower = GetUnitToUnitDistance(bot, allyTowers[1])
 			if distanceFromFountain > towerFromFountain and distanceToTower > 300 then
-				bot:Action_MoveToLocation(allyTowers[1]:GetLocation() + RandomVector(150))
+				RoamMove(allyTowers[1]:GetLocation() + RandomVector(150))
 			else
-				bot:Action_MoveToLocation(J.GetTeamFountain())
+				RoamMove(J.GetTeamFountain())
 			end
 			return
 		end
 	end
 
 	if shouldTempRetreat then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 
 	if shouldGoBackToFountain then
-		bot:Action_MoveToLocation(J.GetTeamFountain())
+		RoamMove(J.GetTeamFountain())
 		return
 	end
 end

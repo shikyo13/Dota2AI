@@ -18,11 +18,33 @@ local fShouldRunTime = 0
 
 local hTeamAncient, hEnemyAncient
 
+local fLastRetreatDesire = 0
+local fLastDesireChangeTime = -100
+local RETREAT_HOLD_MIN = 1.2
+local RETREAT_ACTIVE_THRESHOLD = 0.4
+
 function GetDesire()
     local cacheKey = 'GetRetreatDesire'..tostring(bot:GetPlayerID())
     local cachedVar = J.Utils.GetCachedVars(cacheKey, 0.35 * (1 + Customize.ThinkLess))
     if cachedVar ~= nil then return cachedVar end
+
     local res = GetDesireHelper()
+
+    -- Deadband: prevent rapid transitions at the retreat threshold
+    local wasRetreating = fLastRetreatDesire >= RETREAT_ACTIVE_THRESHOLD
+    local wantsRetreat = res >= RETREAT_ACTIVE_THRESHOLD
+
+    if wasRetreating ~= wantsRetreat then
+        if DotaTime() - fLastDesireChangeTime < RETREAT_HOLD_MIN then
+            res = fLastRetreatDesire
+        else
+            fLastDesireChangeTime = DotaTime()
+            fLastRetreatDesire = res
+        end
+    else
+        fLastRetreatDesire = res
+    end
+
     J.Utils.SetCachedVars(cacheKey, res)
     return res
 end
@@ -437,7 +459,12 @@ function X.GetUnitDesire(nRadius)
     return 0
 end
 
+local fTowerRetreatUntil = 0
+
 function X.RetreatWhenTowerTargetedDesire()
+	-- Hold: keep retreating briefly after leaving tower range
+	if DotaTime() < fTowerRetreatUntil then return 0.7 end
+
 	if DotaTime() > 10 * 60
     or J.IsInTeamFight(bot, 1600)
 	then
@@ -457,12 +484,14 @@ function X.RetreatWhenTowerTargetedDesire()
                 local nDamage = bot:GetEstimatedDamageToTarget(true, botTarget, 5.0, DAMAGE_TYPE_ALL) * 1.2
                 nDamage = botTarget:GetActualIncomingDamage(nDamage, DAMAGE_TYPE_ALL)
                 if nDamage / botTarget:GetHealth() < 0.88 then
+                    fTowerRetreatUntil = DotaTime() + 0.8
                     return 0.9
                 end
             end
         end
 
         if nEnemyTowers[1]:GetAttackTarget() == bot then
+            fTowerRetreatUntil = DotaTime() + 0.8
             return 0.9
         end
 	end
