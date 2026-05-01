@@ -1,55 +1,64 @@
-# Patch Notes Research Campaign
+# Dota2AI Campaign
 
 Updated: 2026-05-01
 
-## Goal
+## Current State
 
-Research and document Dota 2 patch-note impact for adapting OpenHyperAI into this project without conflicting with the parallel tiered-docs agent.
+Root checkout: `D:\Dev\Projects\Dota2AI`
 
-## Isolation
+Active branch: `main`
 
-Work is isolated in `D:\Dev\Projects\Dota2AI-worktrees\patch-notes-20260501` on branch `codex/oha-patch-notes-research-20260501`.
+Current baseline: upstream OpenHyperAI tag `v0.7.41a-26.4.2`, plus local patch-note research and tiered documentation.
 
-The root checkout `D:\Dev\Projects\Dota2AI` was not edited.
+Old local main was archived at `codex/archive-pre-oha-main-20260501`.
 
-The sibling docs worktree `D:\Dev\Projects\Dota2AI-worktrees\oha-improvements-20260501` was not edited.
+Dirty root state from the migration was archived at `codex/archive-dirty-root-before-oha-main-20260501`.
+
+The previous remote main was archived at `codex/archive-origin-main-before-oha-main-20260501`.
+
+## Planned
+
+- Use OpenHyperAI `v0.7.41a-26.4.2` as the new project baseline.
+- Keep old local work recoverable on archive branches.
+- Merge current patch-note research and tiered documentation into the new clean `main`.
+- Use the documentation and patch ledger to guide future bot improvements without rediscovering source layout.
 
 ## Read And Checked
 
-- Confirmed this branch starts at OHA tag `v0.7.41a-26.4.2`.
+- Confirmed OHA baseline commit `cb814c6c8dc51ed08045d6efd9f4a48147992711`.
 - Confirmed `bots/FunLib/version.lua` reports `0.7.41 - 2026/04/02`.
-- Checked Valve patch list datafeed on 2026-05-01.
 - Checked Valve patch datafeeds for `7.39b`, `7.39c`, `7.39d`, `7.39e`, `7.40`, `7.40b`, `7.40c`, `7.41`, `7.41a`, and `7.41b`.
-- Checked Valve hero, item, and ability list datafeeds to map IDs to names where available.
-- Checked OpenHyperAI release page for tag, release name, and commit.
+- Checked Valve hero, item, and ability list datafeeds for patch-note ID mapping.
+- Read and regenerated tiered source ledgers from tracked repository files outside `.git`, `.worktrees`, `node_modules`, and generated `docs/data`.
+- Key runtime source inspected for docs: `game/gameinit.lua`, `game/botsinit.lua`, `bots/bot_generic.lua`, `bots/hero_selection.lua`, `bots/item_purchase_generic.lua`, `bots/ability_item_usage_generic.lua`, core mode files, and major FunLib helpers.
 
 ## Built
 
-No build was run. This is a documentation-only research branch.
+- `npm run build` passed after the new OHA main was checked out and `.worktrees/` was ignored.
+- Build still emits existing TSTL truthiness warnings in `typescript/bots/FunLib/advanced_item_strategy.ts`.
 
 ## Written
 
-- `docs/research/patch-notes/_index.md`
-- `docs/research/patch-notes/oha-current-gap-7.41a-to-7.41b-2026-05-01.md`
-- `docs/research/patch-notes/migration-ledger-7.39-to-7.41b-2026-05-01.md`
+- Tiered documentation router and references: `AGENTS.md`, `CLAUDE.md`, `docs/_index.md`, `docs/tier1-quickref.md`, `docs/tier2-architecture.md`, `docs/tier2-gameplay-systems.md`, `docs/tier3-current-script-reference.md`.
+- Generated source ledgers: `docs/data/*`.
+- Patch research: `docs/research/patch-notes/*`.
+- Historical OHA and script audit research: `docs/research/openhyperai-release-and-patch-gap-2026-05-01.md`, `docs/research/dota-bot-scripting-source-audit-2026-05-01.md`.
 
 ## Decisions
 
-- Do not copy full official patch notes into the repo. Use source links, structured counts, summaries, and bot-impact checklists.
-- Keep this work out of the active tiered-doc files to avoid conflicting with the other agent.
-- Treat `7.41b` as the only direct patch gap after the upstream OHA 7.41a release.
-- Keep the wider `7.39` to `7.41b` ledger for historical migration context and stale-local-code audits.
+- Root `main` is now the clean OHA-based baseline.
+- Future active work should use ignored project-local worktrees under `D:\Dev\Projects\Dota2AI\.worktrees\`.
+- Do not use the root checkout for feature work unless explicitly requested.
+- Do not copy full official patch-note text into the repo. Keep bot-impact summaries, source links, and checklists.
+- Treat `7.41b` as the direct live patch gap after OHA `7.41a`.
+- Keep the wider `7.39` to `7.41b` patch ledger for stale-code audit context.
 
 ## Verification
 
-- Em dash scan passed for changed docs.
-- Padded markdown table separator scan passed for changed docs.
-- Non-ASCII scan passed for changed docs.
-- Trailing whitespace scan passed for changed docs.
-- Source-link sanity check returned HTTP 200 for Valve datafeeds and the OpenHyperAI release page.
-- Git status shows only the new `campaign.md` and `docs/research/` files.
+- Patch-note docs passed em dash, padded table separator, non-ASCII, trailing whitespace, source link, and `git diff --check` scans before merge.
+- Tiered docs passed source-count, stale-count, missing-link, em dash, table separator, and `git diff --check` scans before merge in the docs branch.
+- The staged clean-main documentation merge passed `git diff --check --cached`, conflict-marker scan, em dash scan, markdown table separator scan, and box-drawing character scan.
 
 ## Remaining
 
-- Decide whether to merge this branch into the main OHA improvement worktree after the other agent finishes doc audit.
-- Use the 7.41b checklist during implementation of support stacking, warding, dewarding, objective, and item fixes.
+- Start future bot improvements from a new `.worktrees/<task>` branch based on clean `main`.

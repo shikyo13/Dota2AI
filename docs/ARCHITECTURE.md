@@ -28,57 +28,57 @@ Last verified against: **Patch 7.41a** (March 2026)
 
 ```
 vscripts/
-├── bots/                              # Main bot logic (Workshop folder 3246316298)
-│   ├── bot_generic.lua                # Bot initialization entry point
-│   ├── hero_selection.lua             # Hero picking/banning logic
-│   ├── item_purchase_generic.lua      # Item purchasing state machine
-│   ├── ability_item_usage_generic.lua # Ability casting + item active-use logic (~8000 lines)
-│   ├── mode_*_generic.lua             # Behavior modes (laning, farm, push, retreat, etc.)
-│   │
-│   ├── BotLib/                        # all hero-specific files (one per hero)
-│   │   ├── hero_abaddon.lua
-│   │   ├── hero_axe.lua
-│   │   └── ... (hero_[internal_name].lua)
-│   │
-│   ├── FunLib/                        # Core utility libraries
-│   │   ├── jmz_func.lua              # Main aggregator (loads all sub-libraries as J.*)
-│   │   ├── aba_item.lua              # Item lists, components, sell/buy logic
-│   │   ├── aba_skill.lua             # Ability slot reading, skill build system
-│   │   ├── aba_role.lua              # Role/position assignment (pos 1-5)
-│   │   ├── aba_hero_roles_map.lua    # Hero role scores (carry/support/initiator/etc.)
-│   │   ├── aba_site.lua              # Map positioning, farm timing, location logic
-│   │   ├── spell_list.lua            # Ability weight database (all heroes)
-│   │   ├── spell_prob_list.lua       # Ability probability weights
-│   │   ├── advanced_item_strategy.lua # Fallback item builds by position
-│   │   ├── aba_chat.lua              # Chatbot + item/hero name localization
-│   │   ├── aba_minion.lua            # Minion/summon control
-│   │   ├── aba_special_units.lua     # Special unit interactions
-│   │   ├── morphling_utility.lua     # Morphling replicate helper
-│   │   └── rubick_hero/              # Rubick spell-steal hero-specific logic
-│   │       ├── beastmaster.lua
-│   │       └── ...
-│   │
-│   ├── Buff/                          # Buff mode (enhanced neutral items)
-│   │   └── NeutralItems.lua           # Neutral item tier lists + distribution logic
-│   │
-│   ├── FretBots/                      # Enhanced difficulty mode
-│   │   ├── SettingsDefault.lua        # Default difficulty settings
-│   │   ├── SettingsNeutralItemTable.lua # Neutral item configs with role weights
-│   │   ├── HeroNames.lua             # Hero name localizations (en/zh/ru/ja)
-│   │   ├── NeutralItems.lua          # Neutral item distribution timing/logic
-│   │   └── matchups_data.lua         # Hero matchup database
-│   │
-│   ├── Customize/                     # User customization
-│   │   ├── general.lua               # Global settings (bans, picks, difficulty)
-│   │   └── hero/                     # Per-hero overrides
-│   │       └── viper.lua             # Example
-│   │
-│   └── ts_libs/                       # TypeScript-generated constants
-│       └── dota/heroes.lua           # HeroName enum
-│
-├── typescript/                        # TypeScript source (compiles to Lua)
-├── game/                              # Valve default setup + permanent customization
-└── docs/                              # Developer documentation (this file)
++-- bots/                              # Main bot logic (Workshop folder 3246316298)
+|   +-- bot_generic.lua                # Bot initialization entry point
+|   +-- hero_selection.lua             # Hero picking/banning logic
+|   +-- item_purchase_generic.lua      # Item purchasing state machine
+|   +-- ability_item_usage_generic.lua # Ability casting + item active-use logic (~8000 lines)
+|   +-- mode_*_generic.lua             # Behavior modes (laning, farm, push, retreat, etc.)
+|   |
+|   +-- BotLib/                        # all hero-specific files (one per hero)
+|   |   +-- hero_abaddon.lua
+|   |   +-- hero_axe.lua
+|   |   +-- ... (hero_[internal_name].lua)
+|   |
+|   +-- FunLib/                        # Core utility libraries
+|   |   +-- jmz_func.lua               # Main aggregator (loads all sub-libraries as J.*)
+|   |   +-- aba_item.lua               # Item lists, components, sell/buy logic
+|   |   +-- aba_skill.lua              # Ability slot reading, skill build system
+|   |   +-- aba_role.lua               # Role/position assignment (pos 1-5)
+|   |   +-- aba_hero_roles_map.lua     # Hero role scores (carry/support/initiator/etc.)
+|   |   +-- aba_site.lua               # Map positioning, farm timing, location logic
+|   |   +-- spell_list.lua             # Ability weight database (all heroes)
+|   |   +-- spell_prob_list.lua        # Ability probability weights
+|   |   +-- advanced_item_strategy.lua # Fallback item builds by position
+|   |   +-- aba_chat.lua               # Chatbot + item/hero name localization
+|   |   +-- aba_minion.lua             # Minion/summon control
+|   |   +-- aba_special_units.lua      # Special unit interactions
+|   |   +-- morphling_utility.lua      # Morphling replicate helper
+|   |   +-- rubick_hero/               # Rubick spell-steal hero-specific logic
+|   |       +-- beastmaster.lua
+|   |       +-- ...
+|   |
+|   +-- Buff/                          # Buff mode (enhanced neutral items)
+|   |   +-- NeutralItems.lua           # Neutral item tier lists + distribution logic
+|   |
+|   +-- FretBots/                      # Enhanced difficulty mode
+|   |   +-- SettingsDefault.lua        # Default difficulty settings
+|   |   +-- SettingsNeutralItemTable.lua # Neutral item configs with role weights
+|   |   +-- HeroNames.lua              # Hero name localizations (en/zh/ru/ja)
+|   |   +-- NeutralItems.lua           # Neutral item distribution timing/logic
+|   |   +-- matchups_data.lua          # Hero matchup database
+|   |
+|   +-- Customize/                     # User customization
+|   |   +-- general.lua                # Global settings (bans, picks, difficulty)
+|   |   +-- hero/                      # Per-hero overrides
+|   |       +-- viper.lua              # Example
+|   |
+|   +-- ts_libs/                       # TypeScript-generated constants
+|       +-- dota/heroes.lua            # HeroName enum
+|
++-- typescript/                        # TypeScript source (compiles to Lua)
++-- game/                              # Valve default setup + permanent customization
++-- docs/                              # Developer documentation (this file)
 ```
 
 ---
@@ -86,7 +86,7 @@ vscripts/
 ## 2. Naming Conventions
 
 | Element          | Format                          | Example                              |
-|------------------|---------------------------------|--------------------------------------|
+|-|-|-|
 | Hero internal    | `npc_dota_hero_[name]`          | `npc_dota_hero_crystal_maiden`       |
 | Hero file        | `hero_[name].lua`               | `hero_crystal_maiden.lua`            |
 | Ability          | `[hero]_[ability]`              | `crystal_maiden_crystal_nova`        |
@@ -198,7 +198,7 @@ Takes `sAbilityList` + `nAbilityBuildList` (the `{1,2,1,...}` array) and produce
 ### Item Lists (order of importance)
 
 | List Name        | Purpose                                    | Line Range |
-|------------------|--------------------------------------------|------------|
+|-|-|-|
 | `sBasicItems`    | Basic shop components (branches, boots...) | ~150-197   |
 | `sSeniorItems`   | Mid-tier items (blink, arcane boots...)    | ~199-234   |
 | `sTopItems`      | All finished items the bot can buy         | ~236-320   |
@@ -312,7 +312,7 @@ end
 Located in `mode_*_generic.lua` files:
 
 | File                         | Purpose                        |
-|------------------------------|--------------------------------|
+|-|-|
 | `mode_laning_generic.lua`    | Early laning, last-hitting     |
 | `mode_farm_generic.lua`      | Jungle/creep farming           |
 | `mode_roam_generic.lua`      | Solo ganking                   |
@@ -441,7 +441,7 @@ When a new Dota 2 patch drops, follow these steps in order:
 ## 12. External Data Sources
 
 | Source | URL | Purpose |
-|--------|-----|---------|
+|-|-|-|
 | **d2vpkr shops.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/shops.txt` | Authoritative item internal names |
 | **d2vpkr neutral_items.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/npc/neutral_items.txt` | Current neutral item pool by tier |
 | **d2vpkr npc_heroes.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/npc/npc_heroes.txt` | Hero ability slot definitions |
@@ -464,7 +464,7 @@ Some Lua files in `bots/FunLib/` are **generated from TypeScript** via TSTL. Whe
 ### TS-Generated Files (edit the `.ts` source, not the `.lua` output)
 
 | Generated Lua File | TypeScript Source |
-|---------------------|-------------------|
+|-|-|
 | `FunLib/aba_site.lua` | `typescript/bots/FunLib/aba_site.ts` |
 | `FunLib/utils.lua` | `typescript/bots/FunLib/utils.ts` |
 | `FunLib/advanced_item_strategy.lua` | `typescript/bots/FunLib/advanced_item_strategy.ts` |
