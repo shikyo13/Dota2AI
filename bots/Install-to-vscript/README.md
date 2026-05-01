@@ -4,26 +4,26 @@ These scripts create a symbolic link from the Steam Workshop download folder to 
 
 ### Available Scripts
 
-| File                         | OS      | Language |
-| ---------------------------- | ------- | -------- |
-| `quick-install-oha.bat`      | Windows | English  |
-| `quick-install-oha-cn.bat`   | Windows | Chinese  |
-| `quick-install-oha-mac.sh`   | macOS   | English  |
-| `quick-install-oha-linux.sh` | Linux   | English  |
+| File | OS | Language |
+|-|-|-|
+| `quick-install-oha.bat` | Windows | English |
+| `quick-install-oha-cn.bat` | Windows | Chinese |
+| `quick-install-oha-mac.sh` | macOS | English |
+| `quick-install-oha-linux.sh` | Linux | English |
 
 ---
 
-## Usage — Windows
+## Usage - Windows
 
 1. In Dota 2, subscribe to **Open Hyper AI** in the Steam Workshop. Wait for the download to complete.
 2. Navigate to folder: `Steam\steamapps\workshop\content\570\3246316298\Install-to-vscript`
 3. Double-click `quick-install-oha.bat` to install.
 
-**Finding the folder:** Right-click Dota 2 in your Steam Library → Properties → Installed Files → Browse. This opens `Steam\steamapps\common\dota 2 beta`. In the address bar, replace `common\dota 2 beta` with `workshop\content\570\3246316298\Install-to-vscript` and press Enter.
+**Finding the folder:** Right-click Dota 2 in your Steam Library -> Properties -> Installed Files -> Browse. This opens `Steam\steamapps\common\dota 2 beta`. In the address bar, replace `common\dota 2 beta` with `workshop\content\570\3246316298\Install-to-vscript` and press Enter.
 
 ---
 
-## Usage — macOS
+## Usage - macOS
 
 1. Subscribe to **Open Hyper AI** in the Steam Workshop and wait for download.
 2. Open Terminal.
@@ -39,7 +39,7 @@ These scripts create a symbolic link from the Steam Workshop download folder to 
 
 ---
 
-## Usage — Linux
+## Usage - Linux
 
 1. Subscribe to **Open Hyper AI** in the Steam Workshop and wait for download.
 2. Open a terminal.
@@ -97,7 +97,7 @@ rm ~/Library/Application\ Support/Steam/steamapps/common/dota\ 2\ beta/game/dota
 rm ~/.steam/steam/steamapps/common/dota\ 2\ beta/game/dota/scripts/vscripts/bots
 ```
 
-This only removes the shortcut — your Workshop subscription and Dota 2 files are not affected.
+This only removes the shortcut - your Workshop subscription and Dota 2 files are not affected.
 
 ---
 

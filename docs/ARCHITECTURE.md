@@ -86,7 +86,7 @@ vscripts/
 ## 2. Naming Conventions
 
 | Element          | Format                          | Example                              |
-|------------------|---------------------------------|--------------------------------------|
+|-|-|-|
 | Hero internal    | `npc_dota_hero_[name]`          | `npc_dota_hero_crystal_maiden`       |
 | Hero file        | `hero_[name].lua`               | `hero_crystal_maiden.lua`            |
 | Ability          | `[hero]_[ability]`              | `crystal_maiden_crystal_nova`        |
@@ -198,7 +198,7 @@ Takes `sAbilityList` + `nAbilityBuildList` (the `{1,2,1,...}` array) and produce
 ### Item Lists (order of importance)
 
 | List Name        | Purpose                                    | Line Range |
-|------------------|--------------------------------------------|------------|
+|-|-|-|
 | `sBasicItems`    | Basic shop components (branches, boots...) | ~150-197   |
 | `sSeniorItems`   | Mid-tier items (blink, arcane boots...)    | ~199-234   |
 | `sTopItems`      | All finished items the bot can buy         | ~236-320   |
@@ -312,7 +312,7 @@ end
 Located in `mode_*_generic.lua` files:
 
 | File                         | Purpose                        |
-|------------------------------|--------------------------------|
+|-|-|
 | `mode_laning_generic.lua`    | Early laning, last-hitting     |
 | `mode_farm_generic.lua`      | Jungle/creep farming           |
 | `mode_roam_generic.lua`      | Solo ganking                   |
@@ -441,7 +441,7 @@ When a new Dota 2 patch drops, follow these steps in order:
 ## 12. External Data Sources
 
 | Source | URL | Purpose |
-|--------|-----|---------|
+|-|-|-|
 | **d2vpkr shops.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/shops.txt` | Authoritative item internal names |
 | **d2vpkr neutral_items.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/npc/neutral_items.txt` | Current neutral item pool by tier |
 | **d2vpkr npc_heroes.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/npc/npc_heroes.txt` | Hero ability slot definitions |
@@ -464,7 +464,7 @@ Some Lua files in `bots/FunLib/` are **generated from TypeScript** via TSTL. Whe
 ### TS-Generated Files (edit the `.ts` source, not the `.lua` output)
 
 | Generated Lua File | TypeScript Source |
-|---------------------|-------------------|
+|-|-|
 | `FunLib/aba_site.lua` | `typescript/bots/FunLib/aba_site.ts` |
 | `FunLib/utils.lua` | `typescript/bots/FunLib/utils.ts` |
 | `FunLib/advanced_item_strategy.lua` | `typescript/bots/FunLib/advanced_item_strategy.ts` |

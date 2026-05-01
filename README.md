@@ -36,7 +36,7 @@ For **FretBots mode** (harder bots, neutral items, chatbot): [Manual installatio
 ## In-Game Commands
 
 | Command | Description |
-|---|---|
+|-|-|
 | `!pos X` | Swap your role with a bot (e.g., `!pos 2` for mid) |
 | `!Xpos Y` | Reassign bot positions (e.g., `!3pos 5` = 3rd bot plays pos 5) |
 | `!pick HERO` | Pick a hero (`!pick sniper`, or `/all !pick sniper` for enemy) |
@@ -52,7 +52,7 @@ Use [internal hero names](https://github.com/forest0xia/dota2bot-OpenHyperAI/dis
 Lobby slot order = position assignment (1-5):
 
 | Position | Lane |
-|---|---|
+|-|-|
 | Pos 1 (Carry) + Pos 5 (Hard Support) | Safe Lane |
 | Pos 2 (Mid) | Mid Lane |
 | Pos 3 (Offlane) + Pos 4 (Soft Support) | Offlane |
@@ -64,7 +64,7 @@ Customize picks, bans, and roles in [Customize/general.lua](bots/Customize/gener
 ## Customization
 
 | What | Where |
-|---|---|
+|-|-|
 | General settings (picks, bans, names, roles) | [Customize/general.lua](bots/Customize/general.lua) |
 | Per-hero settings (items, skills) | [Customize/hero/viper.lua](bots/Customize/hero/viper.lua) |
 | FretBots difficulty tuning | [FretBots/SettingsDefault.lua](bots/FretBots/SettingsDefault.lua) |
@@ -81,7 +81,7 @@ Supports most game modes (10+) . See [full compatibility discussion](https://git
 
 ## Offline / LAN Play
 
-You can start a bot game directly from the console without network or clicking UI buttons — useful for offline play, LAN parties, or quick testing. See [play offline setup guide](https://github.com/forest0xia/dota2bot-OpenHyperAI/discussions/135).
+You can start a bot game directly from the console without network or clicking UI buttons - useful for offline play, LAN parties, or quick testing. See [play offline setup guide](https://github.com/forest0xia/dota2bot-OpenHyperAI/discussions/135).
 
 ---
 
@@ -92,7 +92,7 @@ This project uses [Claude Code](https://claude.ai/claude-code) for AI-assisted d
 ### Key Docs
 
 | Document | Description |
-|---|---|
+|-|-|
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Complete codebase architecture, file map, naming conventions, all systems explained |
 | [docs/PATCH_UPDATE_GUIDE.md](docs/PATCH_UPDATE_GUIDE.md) | Step-by-step runbook for updating when a new Dota 2 patch drops |
 | [docs/BOT_API_REFERENCE.md](docs/BOT_API_REFERENCE.md) | Comprehensive Valve bot scripting API reference with examples |
@@ -103,7 +103,7 @@ This project uses [Claude Code](https://claude.ai/claude-code) for AI-assisted d
 Dota 2 bot scripts use internal code names for heroes, items, and abilities. These are different from the display names you see in-game. When updating builds or fixing bugs, always verify against authoritative sources:
 
 | Resource | What It Contains |
-|---|---|
+|-|-|
 | [Liquipedia Cheats Page (Item Names)](https://liquipedia.net/dota2/Cheats) | Authoritative list of `item_*` internal names for all items including neutral items |
 | [d2vpkr npc_abilities.txt](https://raw.githubusercontent.com/dotabuff/d2vpk/master/dota_pak01/scripts/npc/npc_abilities.txt) | All ability internal names and KV data |
 | [Dota 2 Patch Data API](https://www.dota2.com/datafeed/patchnoteslist?language=english) | Official patch notes in machine-readable format |
@@ -180,7 +180,7 @@ root: <Steam/steamapps/common/dota 2 beta/game/dota/scripts/vscripts>
 ## Useful Resources
 
 | Resource | Description |
-|---|---|
+|-|-|
 | [Dota2 AI Development Tutorial](https://www.adamqqq.com/ai/dota2-ai-devlopment-tutorial.html) | Comprehensive guide by adamqqq |
 | [Valve Bot Scripting Intro](https://developer.valvesoftware.com/wiki/Dota_Bot_Scripting) | Official Valve documentation |
 | [Lua Bot APIs (moddota)](https://docs.moddota.com/lua_bots/) | Community API docs |

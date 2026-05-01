@@ -949,7 +949,7 @@ All functions in this section are called on a unit handle: `bot:FunctionName(...
 ### Identity
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetUnitName()` | `string` | Internal unit name (e.g., `"npc_dota_hero_axe"`, `"npc_dota_creep_goodguys_melee"`) |
 | `GetPlayerID()` | `int` | Owning player ID. Returns -1 for non-player units (creeps, neutrals). |
 | `GetTeam()` | `int` | Team affiliation (`TEAM_RADIANT`, `TEAM_DIRE`, `TEAM_NEUTRAL`) |
@@ -959,7 +959,7 @@ All functions in this section are called on a unit handle: `bot:FunctionName(...
 ### Unit Classification
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `IsHero()` | `bool` | True for hero units (including illusions and clones) |
 | `IsIllusion()` | `bool` | True for illusions only. Note: Meepo clones return false. |
 | `IsCourier()` | `bool` | True for courier units |
@@ -973,7 +973,7 @@ All functions in this section are called on a unit handle: `bot:FunctionName(...
 ### Health and Mana
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetHealth()` | `int` | Current HP |
 | `GetMaxHealth()` | `int` | Maximum HP |
 | `GetHealthRegen()` | `float` | Total HP regeneration per second (including all bonuses) |
@@ -1000,7 +1000,7 @@ All functions in this section are called on a unit handle: `bot:FunctionName(...
 ### Buyback
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `HasBuyback()` | `bool` | Can this hero buy back? Returns `false` for enemy heroes (hidden info). |
 | `GetBuybackCost()` | `int` | Gold required. Returns `-1` for enemy heroes. |
 | `GetBuybackCooldown()` | `float` | Cooldown remaining. Returns `-1` for enemy heroes. |
@@ -1010,7 +1010,7 @@ All functions in this section are called on a unit handle: `bot:FunctionName(...
 ### Combat Stats
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetBaseDamage()` | `float` | Average base attack damage (no bonus damage) |
 | `GetBaseDamageVariance()` | `float` | +/- damage variation from base |
 | `GetAttackDamage()` | `float` | Total attack damage including all bonuses |
@@ -1052,7 +1052,7 @@ end
 **Returns:** `float` -- Estimated total damage output against the target.
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetAttackCombatProficiency(hTarget)` | `float` | Outgoing damage multiplier vs specific target |
 | `GetDefendCombatProficiency(hAttacker)` | `float` | Incoming damage multiplier from specific attacker |
 | `GetOffensivePower()` | `float` | Estimated total damage output (respects cooldowns/mana) |
@@ -1061,7 +1061,7 @@ end
 ### Defense Stats
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetArmor()` | `float` | Current armor value (can be negative) |
 | `GetMagicResist()` | `float` | Magic resistance as a fraction (0.25 = 25%) |
 | `GetEvasion()` | `float` | Evasion chance as a fraction |
@@ -1070,7 +1070,7 @@ end
 ### Movement and Position
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetLocation()` | `vector` | Current world position |
 | `GetFacing()` | `int` | Facing direction in degrees (0-359, 0 = east, 90 = north) |
 | `GetBaseMovementSpeed()` | `int` | Base movement speed (before boots/buffs) |
@@ -1107,7 +1107,7 @@ end
 ### Attributes and Level
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetLevel()` | `int` | Current hero level (1-30) |
 | `GetPrimaryAttribute()` | `int` | `ATTRIBUTE_STRENGTH`, `ATTRIBUTE_AGILITY`, or `ATTRIBUTE_INTELLECT` |
 | `GetAttributeValue(nAttrib)` | `int` | Value of the specified attribute. Returns `-1` for non-heroes. |
@@ -1133,7 +1133,7 @@ end
 **Returns:** `int` -- Total value of items assigned to this hero on the courier.
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetLastHits()` | `int` | Last hit count |
 | `GetDenies()` | `int` | Deny count |
 | `GetBountyXP()` | `int` | XP reward for killing this unit |
@@ -1143,7 +1143,7 @@ end
 ### Proximity to Shops
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `DistanceFromFountain()` | `int` | Distance to fountain. Returns `0` when in fountain range. |
 | `DistanceFromSecretShop()` | `int` | Distance to nearest secret shop. `0` = in range. |
 | `DistanceFromSideShop()` | `int` | Distance to nearest side shop. `0` = in range. |
@@ -1158,7 +1158,7 @@ end
 ### Vision
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetCurrentVisionRange()` | `int` | Active vision radius (changes with day/night) |
 | `GetDayTimeVisionRange()` | `int` | Vision range during daytime |
 | `GetNightTimeVisionRange()` | `int` | Vision range at night |
@@ -1167,7 +1167,7 @@ end
 ### Status Effects
 
 | Function | Returns | Notes |
-|---|---|---|
+|-|-|-|
 | `IsStunned()` | `bool` | Unit is stunned |
 | `IsRooted()` | `bool` | Unit is rooted (can't move, can still cast/attack) |
 | `IsSilenced()` | `bool` | Unit is silenced (can't cast abilities) |
@@ -1194,7 +1194,7 @@ end
 ### Combat Analysis
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetStunDuration(bAvailable)` | `float` | Total available stun duration in seconds. `bAvailable=true` only counts ready abilities. |
 | `GetSlowDuration(bAvailable)` | `float` | Total available slow duration. |
 | `HasBlink(bAvailable)` | `bool` | Has a blink ability or item? |
@@ -1206,7 +1206,7 @@ end
 ### Damage History
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `WasRecentlyDamagedByAnyHero(fInterval)` | `bool` | Damaged by any hero within `fInterval` seconds? |
 | `TimeSinceDamagedByAnyHero()` | `float` | Seconds since last hero damage. Large value if never damaged. |
 | `WasRecentlyDamagedByHero(hUnit, fInterval)` | `bool` | Damaged by a specific hero? |
@@ -1331,7 +1331,7 @@ end
 ```
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `NumModifiers()` | `int` | Total number of active modifiers |
 | `GetModifierList()` | `{string...}` | Table of all modifier names |
 | `GetModifierName(nIndex)` | `string` | Modifier name by index |
@@ -1383,7 +1383,7 @@ end
 ### Animation and Casting State
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetAnimActivity()` | `int` | Current animation (`ACTIVITY_*` constant) |
 | `GetAnimCycle()` | `float` | Animation progress 0.0 to 1.0 |
 | `IsChanneling()` | `bool` | Currently channeling an ability or item? |
@@ -1394,7 +1394,7 @@ end
 ### Bot Mode
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetActiveMode()` | `int` | Current bot mode (`BOT_MODE_*`) |
 | `GetActiveModeDesire()` | `float` | Desire value of the current active mode (0.0-1.0) |
 | `GetAssignedLane()` | `int` | Lane assigned to this bot (`LANE_TOP`, `LANE_MID`, `LANE_BOT`) |
@@ -1441,7 +1441,7 @@ end
 ### Target Management
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `SetTarget(hUnit)` | -- | Store a temporary target reference on this bot |
 | `GetTarget()` | `hUnit` | Retrieve the stored target |
 | `GetAbilityTarget()` | `hUnit` | The unit targeted by the current ability being cast |
@@ -1457,7 +1457,7 @@ All functions in this section are called on an ability or item handle: `hAbility
 ### Identity
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetName()` | `string` | Internal ability/item name |
 | `GetLevel()` | `int` | Current level (0 = not yet learned) |
 | `GetMaxLevel()` | `int` | Maximum level |
@@ -1466,7 +1466,7 @@ All functions in this section are called on an ability or item handle: `hAbility
 ### Classification
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `IsPassive()` | `bool` | Passive ability (no activation)? |
 | `IsToggle()` | `bool` | Can be toggled on/off? |
 | `IsItem()` | `bool` | Is this an item (vs an ability)? |
@@ -1509,7 +1509,7 @@ end
 > **Enemy abilities always return 0.** You cannot see enemy cooldowns through the API. This function only works reliably for your own abilities and allied abilities.
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetCastRange()` | `int` | Maximum cast distance in units |
 | `GetCastPoint()` | `float` | Cast animation time in seconds (delay before the spell fires) |
 | `GetChannelTime()` | `float` | Channel duration in seconds (0 for non-channeled) |
@@ -1522,7 +1522,7 @@ end
 ### Effects and Damage
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetAbilityDamage()` | `int` | Base damage of the ability at current level |
 | `GetDamageType()` | `int` | `DAMAGE_TYPE_PHYSICAL`, `DAMAGE_TYPE_MAGICAL`, or `DAMAGE_TYPE_PURE` |
 | `GetDuration()` | `float` | Primary effect duration |
@@ -1562,7 +1562,7 @@ end
 ```
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetTargetTeam()` | `int` | Target team flags bitfield (`ABILITY_TARGET_TEAM_*`) |
 | `GetTargetType()` | `int` | Target type flags bitfield (`ABILITY_TARGET_TYPE_*`) |
 | `GetTargetFlags()` | `int` | Target flag conditions bitfield (`ABILITY_TARGET_FLAG_*`) |
@@ -1570,14 +1570,14 @@ end
 ### Leveling
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `CanAbilityBeUpgraded()` | `bool` | Can be leveled right now? (checks hero level requirement + available points) |
 | `GetHeroLevelRequiredToUpgrade()` | `int` | Minimum hero level needed to put a point in this ability |
 
 ### Charges
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetCurrentCharges()` | `int` | Current charge count (e.g., Magic Wand charges, Drum charges) |
 | `GetInitialCharges()` | `int` | Charges the item starts with |
 | `GetSecondaryCharges()` | `int` | Secondary charge pool (some abilities have two charge systems) |
@@ -1585,7 +1585,7 @@ end
 ### Toggle and Autocast
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `GetAutoCastState()` | `bool` | Is autocast currently enabled? |
 | `GetToggleState()` | `bool` | Is the toggle currently on? |
 | `ToggleAutoCast()` | -- | Toggle autocast on/off |
@@ -1610,7 +1610,7 @@ local bonusDamage = ability:GetSpecialValueInt("bonus_damage")
 ### Item-Only Functions
 
 | Function | Returns | Description |
-|---|---|---|
+|-|-|-|
 | `CanBeDisassembled()` | `bool` | Can this item be disassembled into components? |
 | `IsCombineLocked()` | `bool` | Is auto-combining locked for this item? |
 | `GetPowerTreadsStat()` | `int` | Current Power Treads attribute (`ATTRIBUTE_STRENGTH`, `ATTRIBUTE_AGILITY`, `ATTRIBUTE_INTELLECT`) |
@@ -1831,7 +1831,7 @@ BOT_MODE_ROSHAN             BOT_MODE_ITEM              BOT_MODE_WARD
 ### Desire Values
 
 | Constant | Value | Alias |
-|---|---|---|
+|-|-|-|
 | `BOT_MODE_DESIRE_NONE` | 0.0 | `BOT_ACTION_DESIRE_NONE` |
 | `BOT_MODE_DESIRE_VERYLOW` | 0.1 | `BOT_ACTION_DESIRE_VERYLOW` |
 | `BOT_MODE_DESIRE_LOW` | 0.25 | `BOT_ACTION_DESIRE_LOW` |

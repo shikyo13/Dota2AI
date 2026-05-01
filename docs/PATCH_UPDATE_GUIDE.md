@@ -11,7 +11,7 @@ This is a step-by-step runbook for quickly updating the bot scripts when Valve r
 ### Data Sources for Patch Detection
 
 | Source | URL | What It Tells You |
-|--------|-----|-------------------|
+|-|-|-|
 | **Valve Patch List API** | `https://www.dota2.com/datafeed/patchnoteslist?language=english` | Lists all patches with timestamps -- compare latest against what we've updated |
 | **Valve Patch Notes API** | `https://www.dota2.com/datafeed/patchnotes?version=X.XX&language=english` | Machine-readable patch data (hero IDs, ability IDs, exact changes) |
 | **d2vpkr shops.txt** | `https://raw.githubusercontent.com/dotabuff/d2vpkr/master/dota/scripts/shops.txt` | Current item pool -- diff against aba_item.lua |
@@ -147,7 +147,7 @@ grep -rn "item_removed_name" bots/BotLib/
 
 Replace with role-appropriate alternatives:
 | Hero Role | Good Replacements |
-|-----------|-------------------|
+|-|-|
 | Tank/Offlane | item_pipe, item_crimson_guard, item_heart |
 | Caster/Magic | item_bloodstone, item_octarine_core |
 | Support | item_glimmer_cape, item_solar_crest |
