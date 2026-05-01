@@ -59,6 +59,8 @@ temp_build/
 *.7z
 
 .idea
+.claude/
+.worktrees/
 node_modules
 
 # typescript output folder
