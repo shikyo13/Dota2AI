@@ -29,4 +29,3 @@ The docs cite Valve and OpenHyperAI sources, but do not vendor full official pat
 |Valve item list datafeed|https://www.dota2.com/datafeed/itemlist?language=english|
 |Valve ability list datafeed|https://www.dota2.com/datafeed/abilitylist?language=english|
 |OpenHyperAI v0.7.41a release|https://github.com/forest0xia/dota2bot-OpenHyperAI/releases/tag/v0.7.41a-26.4.2|
-

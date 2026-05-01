@@ -155,4 +155,3 @@ Valve patch data uses `hero_id` 1961 for Spirit Bear entries in 7.40, 7.40b, and
 |7.41|https://www.dota2.com/datafeed/patchnotes?version=7.41&language=english|
 |7.41a|https://www.dota2.com/datafeed/patchnotes?version=7.41a&language=english|
 |7.41b|https://www.dota2.com/datafeed/patchnotes?version=7.41b&language=english|
-

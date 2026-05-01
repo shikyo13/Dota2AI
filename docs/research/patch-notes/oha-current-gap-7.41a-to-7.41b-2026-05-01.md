@@ -84,4 +84,3 @@ Anti-Mage, Bloodseeker, Crystal Maiden, Drow Ranger, Juggernaut, Pudge, Sand Kin
 |Valve item list|https://www.dota2.com/datafeed/itemlist?language=english|
 |Valve ability list|https://www.dota2.com/datafeed/abilitylist?language=english|
 |OpenHyperAI latest release|https://github.com/forest0xia/dota2bot-OpenHyperAI/releases/tag/v0.7.41a-26.4.2|
-
